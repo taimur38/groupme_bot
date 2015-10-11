@@ -1,0 +1,6 @@
+.ropeproject
+*.pyc
+__pycache__
+constants.py
+.groupy.key
+debug.log

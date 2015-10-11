@@ -1,0 +1,17 @@
+neo:
+    image: kbastani/docker-neo4j
+    volumes:
+        - /opt/data/juanita_kg/:/opt/data/
+    ports:
+        - 7474:7474
+
+pyserver:
+    image: python:3.5
+    working_dir: /code
+    volumes:
+        - .:/code
+    links:
+        - neo
+    ports:
+        - 5000:5000
+    command: bash run.sh
