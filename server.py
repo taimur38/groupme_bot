@@ -14,6 +14,7 @@ r = re.compile(pat)
 
 logging.basicConfig(filename="debug.log", level=logging.INFO)
 
+
 @app.route('/groupme', methods=['POST'])
 def message():
     parsed = request.get_json()
@@ -23,7 +24,6 @@ def message():
 
     sleep(.5)
 
-    print(str(listeners))
     for listener in listeners:
         try:
             listener(parsed)
