@@ -5,7 +5,7 @@ from helpers import post_message
 
 
 def onMessage(message):
-    if 'juanita' not in message['text']:
+    if 'juanita' not in message['text'].lower():
         return
 
     person = random.choice(constants.people)
