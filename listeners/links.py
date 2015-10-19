@@ -12,12 +12,12 @@ r = re.compile(pat)
 
 def onMessage(message):
 
-	# detect url
 	m = r.match(message['text'])
 	if r.match is None:
 		return
 
 	url = m.group()
+	print(url)
 	url_statement = """
 	MATCH (u:User {id: {u_id}})
 
