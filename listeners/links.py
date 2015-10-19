@@ -17,7 +17,7 @@ def onMessage(message):
 	if r.match is None:
 		return
 
-	url = r.group()
+	url = m.group()
 	url_statement = """
 	MATCH (u:User {id: {u_id}})
 
