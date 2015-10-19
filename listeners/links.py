@@ -23,8 +23,8 @@ def onMessage(message):
 
 	MATCH (m:Message {id: {m_id}})
 
-	MERGE (u:URL {id: {url} })
-	MERGE (m)-[r:HAS_URL]->(u)
+	MERGE (l:Link {id: {url} })
+	MERGE (m)-[r:HAS_LINK]->(l)
 	"""
 
 	graph.cypher.execute(url_statement, {
