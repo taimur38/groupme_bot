@@ -13,7 +13,7 @@ r = re.compile(pat)
 def onMessage(message):
 
 	m = r.match(message['text'])
-	if r.match is None:
+	if m is None:
 		return
 
 	url = m.group()

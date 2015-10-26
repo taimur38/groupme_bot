@@ -4,6 +4,7 @@ import logging
 from flask import Flask, request
 
 from listeners import listeners
+from helpers import post_message
 
 app = Flask(__name__)
 urls = []
@@ -27,6 +28,12 @@ def message():
             logging.exception('error')
 
     return 'ok'
+
+
+@app.route('/send/<msg>')
+def say(msg):
+    post_message(msg)
+    return 'sent ' + msg
 
 
 @app.route("/")
