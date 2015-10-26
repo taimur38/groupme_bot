@@ -1,9 +1,11 @@
 import re
+from datetime import datetime
 
 import requests
 from py2neo import Graph
 
 import constants
+from helpers import post_message
 
 graph = Graph(constants.neo_url)
 
@@ -18,9 +20,26 @@ def onMessage(message):
 
 	url = m.group()
 	print(url)
-	url_statement = """
-	MATCH (u:User {id: {u_id}})
 
+	# check if it exists
+
+	check_statement = """
+	MATCH (u:User)--(m:Message)--(l:Link {id: {url}})
+	return u.name as name, m.date as date
+	"""
+
+	previous_cases = graph.cypher.execute(check_statement, {
+		'url': url
+	})
+
+	for pc in previous_cases:
+		datestring = datetime.fromtimestamp(int(pc['date'])).strftime('%m/%d %H:%M:%S')
+		name = pc['name'].split(' ')[-1]
+
+		post_message("Mr. {user} posted that on {ds}".format(user=name, ds=datestring))
+
+
+	url_statement = """
 	MATCH (m:Message {id: {m_id}})
 
 	MERGE (l:Link {id: {url} })
