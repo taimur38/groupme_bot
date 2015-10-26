@@ -56,7 +56,7 @@ def get_links():
 
     divs = ""
     for r in rsp:
-		datestring = datetime.fromtimestamp(int(r['date'])).strftime('%m/%d %H:%M:%S')
+        datestring = datetime.fromtimestamp(int(r['date'])).strftime('%m/%d %H:%M:%S')
         divs += template.format(link=r['link'], user=r['name'], date=datestring)
 
     return """
