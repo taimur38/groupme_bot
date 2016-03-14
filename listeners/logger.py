@@ -37,7 +37,7 @@ def onMessage(message):
         'content': message['text']
     })
 
-    transactions = rsp.json()
+    transactions = rsp.json()['transactions']
 
     for tx in transactions:
         graph.cypher.execute(tx)

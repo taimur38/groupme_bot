@@ -1,3 +1,4 @@
+import random
 from time import sleep
 import logging
 from datetime import datetime
@@ -15,6 +16,7 @@ urls = []
 logging.basicConfig(filename="debug.log", level=logging.INFO)
 
 graph = Graph(constants.neo_url)
+
 
 @app.route('/groupme', methods=['POST'])
 def message():
@@ -63,9 +65,29 @@ def get_links():
     return """
     <html>
     <body>
+    <h1>Last 15 submitted links</h1>
     {divs}
     </body>
     </html>""".format(divs=divs)
+
+
+xmas_names = {'Taimur', 'Cameron', 'Aakash', 'Matt', 'Ranajoy'}
+selectable_names = {'Taimur', 'Cameron', 'Aakash', 'Matt', 'Ranajoy'}
+
+
+@app.route('/names/<name>')
+def return_names(name):
+
+    global xmas_names
+    global selectable_names
+
+    if name not in selectable_names:
+        return 'name not found'
+
+    person_selected = random.sample(xmas_names - {name}, 1)[0]
+
+    xmas_names = xmas_names - {person_selected}
+    return person_selected
 
 
 @app.route("/")
