@@ -10,6 +10,8 @@ from py2neo import Graph
 from listeners import listeners
 from helpers import post_message
 
+import tasks
+
 app = Flask(__name__)
 urls = []
 
@@ -94,4 +96,5 @@ def return_names(name):
 def status():
     return 'hello'
 
+tasks.run()
 app.run(host='0.0.0.0', debug=True)
