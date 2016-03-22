@@ -25,6 +25,10 @@ def get_forecast():
     print('got weather')
     parsed = rsp.json()
 
+    if 'minutely' not in parsed:
+        print('minutely data not available')
+        return
+
     is_raining = parsed['currently']['precipProbability'] > rain_thresh
 
     for forecast in parsed['minutely']['data'][0:10]:
@@ -39,3 +43,4 @@ def get_forecast():
             minutes, seconds = divmod(minute - current, 60)
             post_message('its going to stop raining in ' + minutes + ' minutes')
             break
+

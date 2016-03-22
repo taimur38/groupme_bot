@@ -8,6 +8,8 @@ neo:
 pyserver:
     image: python:3.5
     working_dir: /code
+    environment:
+        TZ: EDT
     volumes:
         - .:/code
     links:
