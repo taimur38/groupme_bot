@@ -2,8 +2,14 @@ import datetime
 
 import requests
 
+from helpers import post_message
+
+
 apikey = "d1e60a33f93544f98af756fe4adbaf46"
 home = '40.719364,-73.945889'
+rain_thresh = 0.8
+
+forecast_rain_date = datetime.datetime.now()
 
 
 def get_forecast():
@@ -17,31 +23,20 @@ def get_forecast():
 
     parsed = rsp.json()
 
-    is_raining = parsed['currently']['precipProbability'] > 0.8
+    is_raining = parsed['currently']['precipProbability'] > rain_thresh
 
-    min_precip_prob_time = current + datetime.timdelta(hours=3)
-    min_precip_prob = 1
-
-    max_precip_prob_time = current - datetime.timdelta(hours=1)
-    max_precip_prob = 0
-
-    for forecast in parsed['minutely']['data'][0:5]:
+    for forecast in parsed['minutely']['data'][0:10]:
         minute = datetime.datetime.fromtimestamp(forecast['time'])
 
-        curr_prob = forecast['precipProbability']
-        if curr_prob < min_precip_prob:
-            min_precip_prob = curr_prob
-            min_precip_prob_time = minute
+        if not is_raining and forecast['precipProbability'] > rain_thresh:
+            minutes, seconds = divmod(minute - current, 60)
+            post_message('its going to rain in ' + minutes + ' minutes')
+            break
 
-        if curr_prob > max_precip_prob:
-            max_precip_prob = curr_prob
-            max_precip_prob_time = minute
+        if is_raining and forecast['precipProbability'] < 1 - rain_thresh:
+            minutes, seconds = divmod(minute - current, 60)
+            post_message('its going to stop raining in ' + minutes + ' minutes')
+            break
 
-
-
-
-
-# if in the next 10 minutes, it's going to rain with probability > .8, send message and put state to true.
-# if
 
 get_forecast()
