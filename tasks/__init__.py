@@ -1,6 +1,6 @@
 import sched
 
-import weather
+from . import weather
 
 scheduler = sched.scheduler()
 
