@@ -1,3 +1,3 @@
 cd /code &&
 pip install -r requirements.txt &&
-python server.py
+uwsgi --ini uwsgi.ini

@@ -96,5 +96,4 @@ def return_names(name):
 def status():
     return 'hello'
 
-tasks.run()
-app.run(host='0.0.0.0', debug=True)
+# app.run(host='0.0.0.0', debug=True)

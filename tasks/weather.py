@@ -1,5 +1,7 @@
 import datetime
 
+import uwsgi
+from uwsgidecorators import timer
 import requests
 
 from helpers import post_message
@@ -13,6 +15,7 @@ rain_thresh = 0.8
 forecast_rain_date = datetime.datetime.now()
 
 
+@timer(INTERVAL)
 def get_forecast():
     current = datetime.datetime.now()
     future = (current + datetime.timedelta(minutes=5)).strftime('%Y-%m-%dT%H:%M:%S')
@@ -44,3 +47,4 @@ def get_forecast():
             post_message('its going to stop raining in ' + minutes + ' minutes')
             break
 
+    return uwsgi.SPOOL_OK

@@ -1,3 +1,5 @@
 flask
 requests
 py2neo
+uwsgi
+uwsgidecorators
