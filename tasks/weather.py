@@ -16,9 +16,9 @@ forecast_rain_date = datetime.datetime.now()
 
 
 @timer(INTERVAL)
-def get_forecast():
+def get_forecast(args):
     current = datetime.datetime.now()
-    future = (current + datetime.timedelta(minutes=5)).strftime('%Y-%m-%dT%H:%M:%S')
+    future = (current - datetime.timedelta(hours=4) + datetime.timedelta(minutes=5)).strftime('%Y-%m-%dT%H:%M:%S')
     rsp = requests.get('https://api.forecast.io/forecast/' + apikey + '/' + home + ',' + future)
 
     if rsp.status_code != 200:
