@@ -9,7 +9,7 @@ url = "https://api.projectoxford.ai/emotion/v1.0/recognize"
 
 def onMessage(message):
 
-    if 'png' not in message['text'] or 'jpg' not in message['text']:
+    if 'png' not in message['text'] and 'jpg' not in message['text']:
         return
 
     # assuming the message text is just a url.
@@ -21,12 +21,9 @@ def onMessage(message):
 
     parsed = rsp.json()
 
-    if len(parsed) == 0:
-        return
-
     emotions = []
     for face in parsed:
-        for emotion, score in face['scores']:
+        for emotion, score in face['scores'].items():
             if score > .5:
                 emotions.append(emotion)
 
