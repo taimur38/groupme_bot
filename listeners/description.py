@@ -3,7 +3,7 @@ import requests
 import constants
 from helpers import post_message
 
-url = "https://api.projectoxford.ai/emotion/v1.0/analyze?visualFeatures=Description"
+url = "https://api.projectoxford.ai/vision/v1.0/analyze?visualFeatures=Description"
 
 
 def onMessage(message):
@@ -19,13 +19,13 @@ def onMessage(message):
 
     parsed = rsp.json()
 
-    if 'descriptions' not in parsed:
+    if 'description' not in parsed:
         return
 
-    if 'captions' not in parsed['descriptions']:
+    if 'captions' not in parsed['description']:
         return
 
-    captions = parsed['descriptions']['captions']
+    captions = parsed['description']['captions']
     if len(captions) == 0:
         return
 
@@ -33,8 +33,9 @@ def onMessage(message):
     max_score = 0
 
     for caption in captions:
+        print(caption)
         if caption['confidence'] > max_score:
-            max_score = caption
+            max_score = caption['confidence']
             description = caption['text']
 
-    post_message(description + '. I am %.2f percent confident ' % max_score * 100)
+    post_message(description)
