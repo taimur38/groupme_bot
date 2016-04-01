@@ -14,7 +14,6 @@ def onMessage(message):
 
     rsp = session.get('http://www.reddit.com/.json?limit=50')
 
-    print(rsp.text)
     if rsp.status_code != 200:
         return
 
@@ -30,7 +29,6 @@ def get_top_comment(permalink):
 
     rsp = session.get('http://reddit.com' + permalink + '.json')
 
-    print(rsp.text)
     if rsp.status_code != 200:
         return
 
