@@ -22,12 +22,11 @@ def onMessage(message):
     if len(parsed['data']['children']) == 0:
         return
 
-    print(get_top_comment(parsed['data']['children'][0]['data']['permalink']))
+    post_message(get_top_comment(parsed['data']['children'][0]['data']['permalink']))
 
 
 def get_top_comment(permalink):
 
-    print(permalink)
     if '?' in permalink:
         permalink = permalink.split('?')[0]
 
