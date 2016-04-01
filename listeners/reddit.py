@@ -14,7 +14,6 @@ def onMessage(message):
 
     rsp = session.get('http://www.reddit.com/search.json?q=url:' + message['text'])
 
-    print(rsp.text)
     if rsp.status_code != 200:
         return
 
