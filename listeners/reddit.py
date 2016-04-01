@@ -3,14 +3,18 @@ import requests
 from helpers import post_message
 
 
+session = requests.session()
+session.headers.update({'User-Agent': '/u/taimur38'})
+
+
 def onMessage(message):
 
     if 'http' not in message['text']:
         return
 
-    rsp = requests.get('http://www.reddit.com/.json')
+    rsp = session.get('http://www.reddit.com/.json')
 
-    print rsp.text
+    print(rsp.text)
     if rsp.status_code != 200:
         return
 
@@ -24,7 +28,7 @@ def onMessage(message):
 
 def get_top_comment(permalink):
 
-    rsp = requests.get('http://reddit.com' + permalink)
+    rsp = session.get('http://reddit.com' + permalink + '.json')
 
     print(rsp.text)
     if rsp.status_code != 200:
@@ -35,4 +39,4 @@ def get_top_comment(permalink):
     if len(parsed) < 2:
         return
 
-    return parsed[1]['data']['children'][0]['body']
+    return parsed[1]['data']['children'][0]['data']['body']
