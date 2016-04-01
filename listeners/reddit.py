@@ -12,7 +12,7 @@ def onMessage(message):
     if 'http' not in message['text']:
         return
 
-    rsp = session.get('http://www.reddit.com/.json')
+    rsp = session.get('http://www.reddit.com/.json?limit=50')
 
     print(rsp.text)
     if rsp.status_code != 200:
