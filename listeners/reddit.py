@@ -12,7 +12,7 @@ def onMessage(message):
     if 'http' not in message['text']:
         return
 
-    rsp = session.get('http://www.reddit.com/.json?limit=50')
+    rsp = session.get('http://www.reddit.com/search.json?q=url:' + message['text'])
 
     print(rsp.text)
     if rsp.status_code != 200:
@@ -20,17 +20,20 @@ def onMessage(message):
 
     parsed = rsp.json()
 
-    for child in parsed['data']['children']:
-        if message['text'] in child['data'].get('url', ''):
-            post_message(get_top_comment(child['data']['permalink']))
-            return
+    if len(parsed['data']['children']) == 0:
+        return
+
+    print(get_top_comment(parsed['data']['children'][0]['data']['permalink']))
 
 
 def get_top_comment(permalink):
 
+    print(permalink)
+    if '?' in permalink:
+        permalink = permalink.split('?')[0]
+
     rsp = session.get('http://reddit.com' + permalink + '.json')
 
-    print(rsp.text)
     if rsp.status_code != 200:
         return
 
