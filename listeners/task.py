@@ -5,7 +5,7 @@ index = 0
 
 
 def onMessage(message):
-    if 'juanita' not in message['text'].lower():
+    if 'juanita assign' not in message['text'].lower():
         return
 
     global index
