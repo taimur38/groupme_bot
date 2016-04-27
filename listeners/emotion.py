@@ -1,20 +1,26 @@
+import re
 import requests
 
 import constants
 from helpers import post_message
 
 
+pat = re.compile(r'(https?.\/\/+)([^ ]+)')
 url = "https://api.projectoxford.ai/emotion/v1.0/recognize"
 
 
 def onMessage(message):
 
+    match = pat.search(message['text'])
+    if not match:
+        return
+
+    url = match.group()
     if 'png' not in message['text'] and 'jpg' not in message['text']:
         return
 
-    # assuming the message text is just a url.
 
-    rsp = requests.post(url, json={"url": message['text']}, headers={'Ocp-Apim-Subscription-Key': constants.emotion_key})
+    rsp = requests.post(url, json={"url": match}, headers={'Ocp-Apim-Subscription-Key': constants.emotion_key})
 
     if rsp.status_code != 200:
         return

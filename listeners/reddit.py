@@ -1,3 +1,4 @@
+import re
 import requests
 
 from helpers import post_message
@@ -6,13 +7,17 @@ from helpers import post_message
 session = requests.session()
 session.headers.update({'User-Agent': '/u/taimur38'})
 
+pat = re.compile(r'(https?.\/\/+)([^ ]+)')
 
 def onMessage(message):
 
-    if 'http' not in message['text']:
+    m = pat.search(message['text'])
+    if m is None:
         return
 
-    rsp = session.get('http://www.reddit.com/search.json?q=url:' + message['text'])
+    url = m.group()
+
+    rsp = session.get('http://www.reddit.com/search.json?q=url:' + url)
 
     if rsp.status_code != 200:
         return

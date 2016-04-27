@@ -9,12 +9,13 @@ from helpers import post_message
 
 graph = Graph(constants.neo_url)
 
-pat = re.compile(r'(?i)\b((?:https?://|www\d{0,3}[]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?\xab\xbb\u201c\u201d\u2018\u2019]))')
+# pat = re.compile(r'(?i)\b((?:https?://|www\d{0,3}[]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?\xab\xbb\u201c\u201d\u2018\u2019]))')
+pat = re.compile(r'(https?.\/\/+)([^ ]+)')
 r = re.compile(pat)
 
 def onMessage(message):
 
-	m = r.match(message['text'])
+	m = r.search(message['text'])
 	if m is None:
 		return
 
