@@ -1,5 +1,5 @@
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import requests
 from py2neo import Graph
@@ -34,7 +34,7 @@ def onMessage(message):
 	})
 
 	for pc in previous_cases:
-		datestring = datetime.fromtimestamp(int(pc['date'])).strftime('%m/%d %H:%M:%S')
+		datestring = (datetime.fromtimestamp(int(pc['date'])) - delta).strftime('%m/%d %H:%M:%S')
 		name = pc['name'].split(' ')[-1]
 
 		post_message("Mr. {user} posted that on {ds}".format(user=name, ds=datestring))
