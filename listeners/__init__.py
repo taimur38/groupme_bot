@@ -1,4 +1,5 @@
 from . import task
+from . import randrand
 from . import logger
 from . import links
 from . import emotion
@@ -11,5 +12,6 @@ listeners = [
     links.onMessage,
     emotion.onMessage,
     description.onMessage,
-    reddit.onMessage
+    reddit.onMessage,
+    randrand.onMessage
 ]
