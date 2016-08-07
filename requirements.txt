@@ -1,5 +1,5 @@
 flask
 requests
-py2neo
+py2neo==2.0.9
 uwsgi
 uwsgidecorators
